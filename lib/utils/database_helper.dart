@@ -4,6 +4,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 
+import 'package:sqlplay/models/user.dart';
+
+
 class DatabaseHelper {
 
   static final DatabaseHelper _instance = DatabaseHelper.internal();
@@ -32,10 +35,18 @@ class DatabaseHelper {
     //this gives us a path eg. home://directory/files/maindb.db
 
     var ourDb = await openDatabase(path, version: 1, onCreate: _onCreate);
+    return ourDb;
   }
 
   void _onCreate(Database db, int version) async {
     await db.execute(
       "CREATE TABLE $tableUser($columnId INTEGER PRIMARY KEY, $columnUsername TEXT, $columnPassword TEXT)");
+  }
+  //Insertion
+  Future<int> saveUser(User user) async {
+    var dbClient = await db;
+    int res = await dbClient.insert("$tableUser", user.toMap());
+    return res;
+
   }
 }
