@@ -12,7 +12,9 @@ class User {
   }
 
   String get username => _username;
+
   String get password => _password;
+
   int get id => _id;
 
   Map<String, dynamic> toMap() {
@@ -26,6 +28,7 @@ class User {
     }
     return map;
   }
+
   User.fromMap(Map<String, dynamic> map) {
     this._username = map["username"];
     this._password = map["password"];
